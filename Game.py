@@ -18,24 +18,24 @@ class Game:
           self.reward[address] = 1
       else:
         address = 5 * i + j + 25
-        if self.reward[address] != 1:
+        if self.reward[address] != 1 and 0 <= i <= 4 and 0 <= j <= 4:
           self.reward[address] = 1
     else:
       if self.is_enemy:
         address = 5 * i + j + 25
       else:
         address = 5 * i + j
-      if self.reward[address] != -1:
+      if self.reward[address] != -1 and 0 <= i <= 4 and 0 <= j <= 4:
         self.reward[address] = -1
     self.is_enemy = True
   
-  def attack(self, i, j, password, is_user):
+  def attack2(self, i, j, password, is_user):
     if not is_user:
       if self.is_enemy:
         address = 5 * i + j
       else:
         address = 5 * i + j + 25
-      if self.reward[address] == -1 and self.is_locked[address] == password:
+      if self.reward[address] == -1 and self.is_locked[address] == password and 0 <= i <= 4 and 0 <= j <= 4:
         self.reward[address] = 1
         self.is_locked[address] = None
     else:
@@ -43,7 +43,7 @@ class Game:
         address = 5 * i + j + 25
       else:
         address = 5 * i + j
-      if self.reward[address] == 1 and self.is_locked[address] == password:
+      if self.reward[address] == 1 and self.is_locked[address] == password and 0 <= i <= 4 and 0 <= j <= 4:
         self.reward[address] = -1
         self.is_locked[address] = None
     self.is_enemy = True
@@ -54,31 +54,31 @@ class Game:
         address = 5 * i + j
       else:
         address = 5 * i + j + 25
-      if self.reward[address] == 1 and self.is_locked[address] == None:
+      if self.reward[address] == 1 and self.is_locked[address] == None and 0<= i <= 4 and 0 <= j <= 4:
         self.is_locked[address] = password
     else:
       if self.is_enemy:
         address = 5 * i + j + 25
       else:
         address = 5 * i + j
-      if self.reward[address] == -1 and self.is_locked[address] == None:
+      if self.reward[address] == -1 and self.is_locked[address] == None and 0 <= i <= 4 and 0 <= j <= 4:
         self.is_locked[address] = password
     self.is_enemy = True
   
-  def lock(self, i, j, password_before, password_after, is_user):
+  def lock2(self, i, j, password_before, password_after, is_user):
     if not is_user:
       if self.is_enemy:
         address = 5 * i + j
       else:
         address = 5 * i + j + 25
-      if self.reward == 1 and self.is_lock[address] == password_before:
+      if self.reward == 1 and self.is_lock[address] == password_before and 0 <= i <= 4 and 0 <= j <= 4:
         self.is_lock[address] = password_after
     else:
       if self.is_enemy:
         address = 5 * i + j + 25
       else:
         address = 5 * i + j
-      if self.reward == -1 and self.is_lock[address] == password_before:
+      if self.reward == -1 and self.is_lock[address] == password_before and 0 <= i <= 4 and 0 <= j <= 4:
         self.is_lock[address] = password_after
     self.is_enemy = True
 

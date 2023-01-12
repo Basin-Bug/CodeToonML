@@ -20,8 +20,8 @@ max_reward = 0
 
 def solve_input(game, inp):
   nums = [0] * 4
+  p = 0
   for i in range(len(inp)):
-    p = 0
     if "0" <= inp[i] <= "9":
       if p < 2:
         nums[p] = int(inp[i])
@@ -34,20 +34,19 @@ def solve_input(game, inp):
   if "attack" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
-    if nums[-2] != 0:
-      game.attack(nums[0], nums[1])
+    if nums[-2] == 0:
+      game.attack(nums[0], nums[1], True)
     else:
-      game.attack(nums[0], nums[1], nums[2])
+      game.attack2(nums[0], nums[1], nums[2], True)
   elif "connect" in inp:
     game.connect(nums[0], nums[1])
   elif "lock" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
     if nums[-1] == 0:
-      game.lock(nums[0], nums[1], nums[2])
+      game.lock(nums[0], nums[1], nums[2], True)
     else:
-      game.lock(nums[0], nums[1], nums[2], nums[3])
-  print(game.reward)
+      game.lock2(nums[0], nums[1], nums[2], nums[3], True)
   return game.calc_reward()
 
 
@@ -69,5 +68,5 @@ while 1:
     max_reward = max(max_reward, game.calc_reward)
   if episode_number == 2000:
     break
-  get_input()
+  print(get_input())
   #print(game.calc_reward())
