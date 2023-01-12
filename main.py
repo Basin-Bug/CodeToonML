@@ -6,9 +6,10 @@ import sys, os
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 game = Game()
-pg = network(25 * 2, 110, 25 * 5)
+pg = network(25 * 2, 110, 50 * 5)
 
 
 running_reward = 0
@@ -49,16 +50,42 @@ def solve_input(game, inp):
       game.lock2(nums[0], nums[1], nums[2], nums[3], True)
   return game.calc_reward()
 
+def process_action(game, action):
+  print("AI:", end = "")
+  choice = action // 50
+  i = (action % 50) // 5
+  j = (action % 50) % 5
+  if choice == 0:
+    game.attack(i, j, False)
+    print("attack(memory[{}][{}])".format(i, j))
+  elif choice == 1:
+    r = random.randint(1000, 10000)
+    game.attack2(i, j, r, False)
+    print("attack(memory[{}][{}], {})".format(i, j, r))
+  elif choice == 2:
+    r = random.randint(1000, 10000)
+    game.lock(i, j, r, False)
+    print("memory[{}][{}].lock({})".format(i, j, r))
+  elif choice == 3:
+    bef = game.is_locked[5 * i + j]
+    r = random.randint(1000, 10000)
+    game.lock2(i, j, bef, r, False)
+    print("memory[{}][{}].lock({}, {})".format(i, j, bef, r))
+  else:
+    game.connect(i, j)
+    print("connect(memory[{}][{}])".format(i, j))
+
 
 def get_input():
   inp = str(input())
   reward = solve_input(game, inp)
-  return reward
 
-def agent_move(rewards):
-  aprob = pg.forward(rewards)
+def agent_move():
+  aprob = pg.forward(game.reward)
   action = pg.select_action(aprob)
+  process_action(game, action)
   reward = game.calc_reward()
+  time.sleep(5)
   
 while 1:
   if game.calc_reward == 50 or game.calc_reward == -50:
@@ -68,5 +95,10 @@ while 1:
     max_reward = max(max_reward, game.calc_reward)
   if episode_number == 2000:
     break
-  print(get_input())
-  #print(game.calc_reward())
+  """if __name__ == '__main__':
+    with ProcessPoolExecutor(max_workers=2) as executor:
+      executor.submit(get_input)
+      executor.submit(agent_move)"""
+  get_input()
+  agent_move()  
+  print(game.calc_reward())
