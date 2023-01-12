@@ -47,19 +47,19 @@ def solve_input(game, inp):
       game.lock(nums[0], nums[1], nums[2])
     else:
       game.lock(nums[0], nums[1], nums[2], nums[3])
+  print(game.reward)
   return game.calc_reward()
 
 
 def get_input():
   inp = str(input())
   reward = solve_input(game, inp)
+  return reward
 
 def agent_move(rewards):
   aprob = pg.forward(rewards)
   action = pg.select_action(aprob)
   reward = game.calc_reward()
-  
-  
   
 while 1:
   if game.calc_reward == 50 or game.calc_reward == -50:
@@ -69,8 +69,5 @@ while 1:
     max_reward = max(max_reward, game.calc_reward)
   if episode_number == 2000:
     break
-  if __name__ == '__main__':
-    with ProcessPoolExecutor(max_workers=2) as executor:
-      executor.submit(get_input())
-      executor.submit(agent_move(game.reward))
-    print(game.calc_reward())
+  get_input()
+  #print(game.calc_reward())
