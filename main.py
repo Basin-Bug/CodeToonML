@@ -61,21 +61,25 @@ def process_action(game, action):
   i = (action % 50) // 5
   j = (action % 50) % 5
   if choice == 0:
-    game.attack(i, j, False)
     print("attack(memory[{}][{}]);".format(i, j))
+    game.attack(i, j, False)
+    
   elif choice == 1:
     r = random.randint(1000, 10000)
-    game.attack2(i, j, r, False)
     print("attack(memory[{}][{}], {});".format(i, j, r))
+    game.attack2(i, j, r, False)
+    
   elif choice == 2:
     r = random.randint(1000, 10000)
-    game.lock(i, j, r, False)
     print("memory[{}][{}].lock({});".format(i, j, r))
+    game.lock(i, j, r, False)
+    
   elif choice == 3:
     bef = game.is_locked[5 * i + j]
     r = random.randint(1000, 10000)
-    game.lock2(i, j, bef, r, False)
     print("memory[{}][{}].lock({}, {});".format(i, j, bef, r))
+    game.lock2(i, j, bef, r, False)
+    
 
 
 def get_input():
