@@ -72,7 +72,7 @@ class network:
     else:
       action = np.random.choice(range(len(aprob)), p = aprob)
     
-    y = [0] * (50 * 5)
+    y = [0] * (50 * 4)
     y[action] = 1
     self.dlogps.append(y - aprob)
     return action

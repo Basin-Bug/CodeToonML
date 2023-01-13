@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import random
 
 game = Game()
-pg = network(25 * 2, 110, 50 * 5)
+pg = network(25 * 2, 110, 50 * 4)
 
 
 running_reward = 0
@@ -20,6 +20,13 @@ running_new = []
 max_reward = 0
 
 def solve_input(game, inp):
+
+  if inp == "rewards":
+    print(game.reward)
+    solve_input(game, str(input()))
+  elif inp == "passwords":
+    print(game.is_locked)
+    solve_input(game, str(input()))
   nums = [0] * 4
   p = 0
   for i in range(len(inp)):
@@ -39,8 +46,6 @@ def solve_input(game, inp):
       game.attack(nums[0], nums[1], True)
     else:
       game.attack2(nums[0], nums[1], nums[2], True)
-  elif "connect" in inp:
-    game.connect(nums[0], nums[1])
   elif "lock" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
@@ -57,23 +62,20 @@ def process_action(game, action):
   j = (action % 50) % 5
   if choice == 0:
     game.attack(i, j, False)
-    print("attack(memory[{}][{}])".format(i, j))
+    print("attack(memory[{}][{}]);".format(i, j))
   elif choice == 1:
     r = random.randint(1000, 10000)
     game.attack2(i, j, r, False)
-    print("attack(memory[{}][{}], {})".format(i, j, r))
+    print("attack(memory[{}][{}], {});".format(i, j, r))
   elif choice == 2:
     r = random.randint(1000, 10000)
     game.lock(i, j, r, False)
-    print("memory[{}][{}].lock({})".format(i, j, r))
+    print("memory[{}][{}].lock({});".format(i, j, r))
   elif choice == 3:
     bef = game.is_locked[5 * i + j]
     r = random.randint(1000, 10000)
     game.lock2(i, j, bef, r, False)
-    print("memory[{}][{}].lock({}, {})".format(i, j, bef, r))
-  else:
-    game.connect(i, j)
-    print("connect(memory[{}][{}])".format(i, j))
+    print("memory[{}][{}].lock({}, {});".format(i, j, bef, r))
 
 
 def get_input():
@@ -101,4 +103,4 @@ while 1:
       executor.submit(agent_move)"""
   get_input()
   agent_move()  
-  print(game.calc_reward())
+  print("agent's reward: {}".format(game.calc_reward()))
