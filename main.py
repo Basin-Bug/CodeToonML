@@ -61,23 +61,35 @@ def process_action(game, action):
   i = (action % 50) // 5
   j = (action % 50) % 5
   if choice == 0:
-    print("attack(memory[{}][{}]);".format(i, j))
+    if i <= 4:
+      print("attack(enemy.memory[{}][{}]);".format(i, j))
+    else:
+      print("attack(memory[{}][{}]);".format(i - 5, j))
     game.attack(i, j, False)
     
   elif choice == 1:
     r = random.randint(1000, 10000)
-    print("attack(memory[{}][{}], {});".format(i, j, r))
+    if i <= 4:
+      print("attack(enemy.memory[{}][{}], {});".format(i, j, r))
+    else:
+      print("attack(memory[{}][{}], {});".format(i - 5, j, r))
     game.attack2(i, j, r, False)
     
   elif choice == 2:
     r = random.randint(1000, 10000)
-    print("memory[{}][{}].lock({});".format(i, j, r))
+    if i <= 4:
+      print("enemy.memory[{}][{}].lock({});".format(i, j, r))
+    else:
+      print("memory[{}][{}].lock({})".format(i - 5, j, r))
     game.lock(i, j, r, False)
     
   elif choice == 3:
     bef = game.is_locked[5 * i + j]
     r = random.randint(1000, 10000)
-    print("memory[{}][{}].lock({}, {});".format(i, j, bef, r))
+    if i <= 4:
+      print("enemy.memory[{}][{}].lock({}, {});".format(i, j, bef, r))
+    else:
+      print("memory[{}][{}].lock({}, {})".format(i - 5, j , bef, r))
     game.lock2(i, j, bef, r, False)
     
 
