@@ -78,18 +78,18 @@ def process_action(game, action):
   elif choice == 2:
     r = random.randint(1000, 10000)
     if i <= 4:
-      print("enemy.memory[{}][{}].lock({});".format(i, j, r))
+      print("enemy.memory[{}][{}].setPass({});".format(i, j, r))
     else:
-      print("memory[{}][{}].lock({})".format(i - 5, j, r))
+      print("memory[{}][{}].setPass({})".format(i - 5, j, r))
     game.lock(i, j, r, False)
     
   elif choice == 3:
     bef = game.is_locked[5 * i + j]
     r = random.randint(1000, 10000)
     if i <= 4:
-      print("enemy.memory[{}][{}].lock({}, {});".format(i, j, bef, r))
+      print("enemy.memory[{}][{}].setPass({}, {});".format(i, j, bef, r))
     else:
-      print("memory[{}][{}].lock({}, {})".format(i - 5, j , bef, r))
+      print("memory[{}][{}].setPass({}, {})".format(i - 5, j , bef, r))
     game.lock2(i, j, bef, r, False)
     
 
