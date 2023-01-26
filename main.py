@@ -41,7 +41,7 @@ def solve_input(game, inp):
           p += 1
         nums[p] = nums[p] * 10 + int(inp[i])
 
-  if "attack" in inp:
+  if "attack" in inp or "recovery" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
     if nums[-2] == 0:
@@ -66,7 +66,7 @@ def process_action(game, action):
     if i <= 4:
       get_agent_move = "attack(enemy.memory[{}][{}]);".format(i, j)
     else:
-      get_agent_move = "attack(memory[{}][{}]);".format(i - 5, j)
+      get_agent_move = "recovery(memory[{}][{}]);".format(i - 5, j)
     game.attack(i, j, False)
     
   elif choice == 1:
@@ -74,7 +74,7 @@ def process_action(game, action):
     if i <= 4:
       get_agent_move = "attack(enemy.memory[{}][{}], {});".format(i, j, r)
     else:
-      get_agent_move = "attack(memory[{}][{}], {});".format(i - 5, j, r)
+      get_agent_move = "recovery(memory[{}][{}], {});".format(i - 5, j, r)
     game.attack2(i, j, r, False)
     
   elif choice == 2:
