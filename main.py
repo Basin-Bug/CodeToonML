@@ -120,6 +120,7 @@ def agent_move():
 while 1:
   if game.calc_reward == 50 or game.calc_reward == -50:
     print("#####GAME OVER#####")
+    print("#####NEW GAME#####")
     game.reset()
     episode_number += 1
     max_reward = max(max_reward, game.calc_reward)
