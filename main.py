@@ -41,13 +41,21 @@ def solve_input(game, inp):
           p += 1
         nums[p] = nums[p] * 10 + int(inp[i])
 
-  if "attack" in inp or "recovery" in inp:
+  if "attack" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
-    if nums[-2] == 0:
-      game.attack(nums[0], nums[1], True)
     else:
-      game.attack2(nums[0], nums[1], nums[2], True)
+      if nums[-2] == 0:
+        game.attack(nums[0], nums[1], True)
+      else:
+        game.attack2(nums[0], nums[1], nums[2], True)
+  elif "recovery" in inp:
+    if "enemy" not in inp:
+      game.is_enemy = False
+      if nums[-2] == 0:
+        game.attack(nums[0], nums[1], True)
+      else:
+        game.attack2(nums[0], nums[1], nums[2], True)
   elif "lock" in inp:
     if "enemy" not in inp:
       game.is_enemy = False
